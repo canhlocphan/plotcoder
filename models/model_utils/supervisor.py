@@ -132,7 +132,7 @@ class Supervisor(object):
 		predictions = []
 		for batch_idx in range(0, data_size, self.batch_size):
 			batch_input, batch_labels = self.data_processor.get_batch(eval_data, self.batch_size, batch_idx)
-			cur_loss, cur_pred_logits, cur_predictions = self.model(batch_input, batch_labels, eval_flag=True)
+			cur_predictions = self.model.post_forward(batch_input, batch_labels, eval_flag=True)
 			cur_predictions = cur_predictions.data.cpu().numpy().tolist()
 			predictions += cur_predictions
 		return predictions

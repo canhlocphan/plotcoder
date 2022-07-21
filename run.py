@@ -84,7 +84,8 @@ def inference(args):
 	print('Inference')
 	data_processor = data_utils.DataProcessor(args)
 	init_test_data = data_processor.load_data(args.test_dataset)
-	test_data, test_indices = data_processor.preprocess(init_test_data)	
+	test_data = data_processor.post_preprocess(init_test_data)
+	# print(test_data)
 
 	args.word_vocab_size = data_processor.word_vocab_size
 	args.code_vocab_size = data_processor.code_vocab_size
@@ -92,9 +93,9 @@ def inference(args):
 	predictions = model_supervisor.inference(test_data, args.data_order_invariant)
 	for i, item in enumerate(test_data):
 		gt_prog = data_processor.ids_to_prog(item, item['output_gt'])
-		# print("gt_prog", gt_prog, "\n") important
+		print("gt_prog", gt_prog, "\n") #important
 		pred_prog = data_processor.ids_to_prog(item, predictions[i])
-		# print("Prediction: ","".join(pred_prog[:-1])) important
+		print("Prediction: ","".join(pred_prog[:-1])) #important
 
 
 def evaluate(args):
